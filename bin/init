@@ -1,0 +1,73 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies
+ **/
+
+var program = require('commander'),
+    fs = require('fs'),
+    mkdirp = require('mkdirp');
+
+/**
+ * Command Line Interface
+ **/
+
+program
+  .version('0.0.1')
+  .option('-c, --css <engine>', 'add stylesheet engine support (sass|less)')
+  .option('-f, --framework <name>', 'add client-side framework support (angular|ember)')
+  .parse(process.argv);
+
+console.log('Creating your muse:');
+if(program.css) {
+  console.log('You picked:' + program.css);
+}
+if(program.framework) {
+  console.log('You picked:' + program.framework);
+}
+
+var path = '.';
+
+/**
+ * Makin Muses
+ **/
+
+generateMuse(path);
+
+/**
+ * Private Methods
+ **/
+
+function generateMuse(path){
+  mkdir(path, function(){
+    mkdir(path + '/public');
+    mkdir(path + '/public/js');
+    mkdir(path + '/public/img');
+    mkdir(path + '/public/css', function(){
+      switch (program.framework) {
+        case 'sass':
+          write(path + '/public/css/style.scss', log);
+          break;
+        case 'less':
+          write(path + '/public/css/style.less', log);
+          break;
+        default:
+          write(path + '/public/css/style.css', log);
+      }
+    });
+  });
+}
+
+function mkdir(path, cb) {
+  console.log('   Creating: ' + path);
+  mkdirp(path, cb)
+}
+
+function write(path, cb) {
+  console.log('   Creating: ' + path);
+  fs.writeFile(path, cb)
+}
+
+function log() {
+  console.log('Done!');
+}
