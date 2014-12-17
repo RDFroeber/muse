@@ -13,7 +13,14 @@ npm install muse -g
 ## Usage
 
 ```sh
-muse init
+  Usage: muse [options]
+
+  Options:
+
+    -h, --help              output usage information
+    -V, --version           output the version number
+    -c, --css <engine>      add stylesheet engine support (sass|less)
+    -f, --framework <name>  add client-side framework support (angular|ember)
 ```
 
 ## Tests

@@ -3,20 +3,24 @@
   "version": "0.1.0",
   "description": "A CMS scaffolding generator (Coming Soon)",
   "main": "index.js",
+  "bin": {
+    "muse": "bin/init"
+  },
   "scripts": {
     "test": "npm test"
+  },
+   "repository": {
+    "type": "git",
+    "url": "https://github.com/RDFroeber/muse.git"
   },
   "keywords": [
     "CMS",
     "Express"
   ],
   "author": "Raleigh D. Froeber <RDFroeber@gmail.com> (http://raleighdaniel.com/)",
-  "license": "MIT",
-  "bin": {
-    "muse": "bin/init"
-  },
   "dependencies": {
     "commander": "^2.5.1",
     "mkdirp": "^0.5.0"
-  }
+  },
+  "license": "MIT"
 }
