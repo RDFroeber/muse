@@ -1,7 +1,7 @@
 {
   "name": "muse",
   "version": "0.1.1",
-  "description": "A CMS scaffolding generator (Coming Soon)",
+  "description": "A CMS Scaffolding Tool (Coming Soon)",
   "main": "index.js",
   "bin": {
     "muse": "bin/init"

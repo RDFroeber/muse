@@ -1,6 +1,6 @@
 # muse 
 
-A CMS scaffolding generator (Coming Soon)
+A CMS Scaffolding Tool (Coming Soon)
 
 ## Installation
 
@@ -10,10 +10,12 @@ Download node at [nodejs.org](http://nodejs.org) and install it, if you haven't 
 npm install muse -g
 ```
 
+Source code can be found [here](https://github.com/RDFroeber/muse).
+
 ## Usage
 
 ```sh
-  Usage: muse [options]
+  Usage: muse init [options]
 
   Options:
 
@@ -22,6 +24,11 @@ npm install muse -g
     -c, --css <engine>      add stylesheet engine support (sass|less)
     -f, --framework <name>  add client-side framework support (angular|ember)
 ```
+
+## Development Task List
+
+* Coming Soon
+* ...
 
 ## Tests
 
@@ -32,7 +39,7 @@ npm test
 
 ## Dependencies
 
-- [commander](https://github.com/tj/commander.js): the complete solution for node.js command-line programs
+- [commander](https://github.com/tj/commander.js): The complete solution for node.js command-line programs
 - [mkdirp](https://github.com/substack/node-mkdirp): Recursively mkdir, like `mkdir -p`
 
 ## Dev Dependencies
