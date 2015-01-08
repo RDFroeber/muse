@@ -6,7 +6,8 @@
 
 var program = require('commander'),
     fs = require('fs'),
-    mkdirp = require('mkdirp');
+    mkdirp = require('mkdirp'),
+    rimraf = require('rimraf');
 
 /**
  * Command Line Interface
@@ -14,13 +15,19 @@ var program = require('commander'),
 
 program
   .version('0.0.1')
-  .option('-c, --css <engine>', 'add stylesheet engine support (sass|less)')
-  .option('-f, --framework <name>', 'add client-side framework support (angular|ember)')
+  .option('-c, --css <engine>', 'add stylesheet engine support (sass|less) defaults to none (css)')
+  .option('-a, --auth <strategy>', 'choose authentication strategy (basic|oauth|both) defaults to basic')
+  .option('-p, --private', 'make your site private by requiring users to log in')
+  .option('-e, --view <engine>', 'add view engine support (ejs|hbs) defaults to ejs')
+  .option('-f, --framework <name>', 'add client-side framework support (angular|ember) defaults to none')
   .parse(process.argv);
 
 console.log('Creating your muse:');
 if(program.css) {
   console.log('You picked:' + program.css);
+}
+if(program.view) {
+  console.log('You picked:' + program.view);
 }
 if(program.framework) {
   console.log('You picked:' + program.framework);
@@ -32,6 +39,9 @@ var path = '.';
  * Makin Muses
  **/
 
+// Basic mongoose models and CRUD operations for Users, Pages, Blogs, and Posts
+// Separate view routes from API routes in preparation for client-side framework support
+
 generateMuse(path);
 
 /**
@@ -40,21 +50,33 @@ generateMuse(path);
 
 function generateMuse(path){
   mkdir(path, function(){
+    mkdir(path + '/server');
+    mkdir(path + '/server/models');
+    write(path + '/server/models/index.js', log());
+    write(path + '/server/models/User.js', log());
+    write(path + '/server/models/Page.js', log());
+    mkdir(path + '/server/routes');
+    write(path + '/server/routes/index.js', log());
+    write(path + '/server/routes/users.js', log());
+    write(path + '/server/routes/auth.js', log());
     mkdir(path + '/public');
     mkdir(path + '/public/js');
+    write(path + '/public/js/main.js', log());
     mkdir(path + '/public/img');
     mkdir(path + '/public/css', function(){
       switch (program.framework) {
         case 'sass':
-          write(path + '/public/css/style.scss', log);
+          write(path + '/public/css/style.scss', log());
           break;
         case 'less':
-          write(path + '/public/css/style.less', log);
+          write(path + '/public/css/style.less', log());
           break;
         default:
-          write(path + '/public/css/style.css', log);
+          write(path + '/public/css/style.css', log());
       }
     });
+    mkdir(path + '/public/templates');
+    mkdir(path + '/config');
   });
 }
 
@@ -70,4 +92,16 @@ function write(path, cb) {
 
 function log() {
   console.log('Done!');
+}
+
+function cleanup(dir, callback) {
+  if (typeof dir === 'function') {
+    callback = dir;
+    dir = tempDir;
+  }
+
+  rimraf(tempDir, function (err) {
+    console.log('Removing ' + tempDir);
+    callback(err);
+  });
 }

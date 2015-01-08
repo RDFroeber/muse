@@ -2,6 +2,11 @@
 
 A CMS Scaffolding Tool (Coming Soon)
 
+[![NPM Version](https://img.shields.io/npm/v/muse.svg?style=flat)](https://www.npmjs.org/package/muse)
+[![Dependency Status](https://david-dm.org/RDFroeber/muse.svg)](https://david-dm.org/RDFroeber/muse)
+[![devDependency Status](https://david-dm.org/RDFroeber/muse/dev-status.svg?theme=shields.io)](https://david-dm.org/RDFroeber/muse#info=devDependencies)
+[![Build Status](https://travis-ci.org/RDFroeber/muse.svg?branch=master)](https://travis-ci.org/RDFroeber/muse)
+
 This package is in the early stages of development. Feel free to browse the code and star for review at a later date. However, use of the module is not recommended at the current version. Basic CMS functionality will be available in the 0.2.0 release. All 0.1.x versions are for project setup and testing.
 
 ## Installation
@@ -25,13 +30,54 @@ While many command options are listed here, very few are actually implemented to
 
     -h, --help              output usage information
     -V, --version           output the version number
-    -c, --css <engine>      add stylesheet engine support (sass|less)
-    -f, --framework <name>  add client-side framework support (angular|ember)
+    -a, --auth              choose authentication strategy (basic|oauth|both) defaults to basic
+    -p, --private           make your site private by requiring users to log in
+    -n, --noblog            remove blog functionality from site
+    -c, --css <engine>      add stylesheet engine support (sass|less) defaults to sass
+    -e, --view <engine>     add view engine support (ejs|handlebars) defaults to ejs
+    -f, --framework <name>  add client-side framework support (angular|ember) defaults to none
 ```
+## File Structure
+
+server
+  models
+    index.js
+    User.js
+  routes
+    index.js
+    auth.js
+    users.js
+public
+  css
+    style.scss
+    // style.css
+  js
+    main.js
+  img
+    logo.png // muse logo
+    favicon.ico
+  templates
+    index.ejs // home
+    layout.ejs // layout file
+    auth
+      signup.ejs // create account
+      login.ejs // login to account
+    users
+      index.ejs // view all users
+      view.ejs // view specific account
+      edit.ejs // edit user account
+    errors
+      401.ejs
+      404.ejs
+      500.ejs
+      503.ejs
+config
+  passport.js // passport config
+  auth.js // auth API credentials
 
 ## Development Task List
 
-* Finalize default configuration and structure
+* Finalize default configuration and structure (grab image of tree structure)
     * Basic mongoose models and CRUD operations for Users, Pages, Blogs, and Posts
     * Separate view routes from API routes in preparation for client-side framework support
 * User Authentication (Passport)
@@ -64,8 +110,9 @@ While many command options are listed here, very few are actually implemented to
     * Ember
     * Backbone
 * Add multiple Node.js framework support 
-    * Loopback
+    * Koa
     * Sails
+    * Hapi
 * Multi-blog support
 
 ## Tests
