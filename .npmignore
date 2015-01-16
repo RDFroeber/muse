@@ -1,0 +1,5 @@
+# Tests directory
+test/
+
+# Continuous integration settings
+.travis.yml
