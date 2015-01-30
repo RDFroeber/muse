@@ -8,8 +8,7 @@ var program = require('commander'),
     fs = require('fs'),
     mkdirp = require('mkdirp'),
     rimraf = require('rimraf'),
-    _ = require('underscore'),
-    async = require('async');
+    _ = require('underscore');
 
 /**
  * Command Line Interface
@@ -19,9 +18,9 @@ program
   .version('0.0.1')
   .option('-c, --css <engine>', 'add stylesheet engine support (sass|less) defaults to none (css)')
   .option('-a, --auth <strategy>', 'choose authentication strategy (basic|oauth|both) defaults to basic')
-  .option('-p, --private', 'make your site private by requiring users to log in')
-  .option('-e, --view <engine>', 'add view engine support (ejs|hbs) defaults to ejs')
-  .option('-f, --framework <name>', 'add client-side framework support (angular|ember) defaults to none')
+  // .option('-p, --private', 'make your site private by requiring users to log in')
+  // .option('-e, --view <engine>', 'add view engine support (ejs|hbs) defaults to ejs')
+  // .option('-f, --framework <name>', 'add client-side framework support (angular|ember) defaults to none')
   .parse(process.argv);
 
 console.log('Creating your muse:');
@@ -53,50 +52,80 @@ generateMuse(path);
 function generateMuse(path){
   mkdir(path, function(){
     mkdir(path + '/server');
-    mkdir(path + '/server/models');
-    write(path + '/server/models/index.js');
-    write(path + '/server/models/User.js');
-    write(path + '/server/models/Page.js');
-    mkdir(path + '/server/routes');
-    write(path + '/server/routes/index.js');
-    write(path + '/server/routes/users.js');
-    write(path + '/server/routes/auth.js');
+    mkdir(path + '/server/models', function(){
+      var options;
+      switch(program.auth) {
+        case 'basic':
+          options = 'basic';
+          break;
+        case 'oauth':
+          options = 'oauth';
+          break;
+        case 'both':
+          options = 'both';
+          break;
+        default:
+          options = 'basic';
+      }
+      write(path + '/server/models/index.js');
+      write(path + '/server/models/Page.js');
+      write(path + '/server/models/User.js', options);
+    });
+    mkdir(path + '/server/routes', function(){
+      var options;
+      switch(program.auth) {
+        case 'basic':
+          options = 'basic';
+          break;
+        case 'oauth':
+          options = 'oauth';
+          break;
+        case 'both':
+          options = 'both';
+          break;
+        default:
+          options = 'basic';
+      }
+      write(path + '/server/routes/index.js');
+      write(path + '/server/routes/users.js', options);
+      write(path + '/server/routes/auth.js', options);
+    });
     mkdir(path + '/public');
     mkdir(path + '/public/js');
-    write(path + '/public/js/main.js', dataLog('js-main'));
+    write(path + '/public/js/main.js');
     mkdir(path + '/public/img');
     // copy default logo
     // copy default favicon
     mkdir(path + '/public/css', function(){
-      switch (program.framework) {
+      switch(program.framework) {
         case 'sass':
-          write(path + '/public/css/style.scss', dataLog('style-sass'));
+          write(path + '/public/css/style.scss');
           break;
         case 'less':
-          write(path + '/public/css/style.less', dataLog('style-less'));
+          write(path + '/public/css/style.less');
           break;
         default:
-          write(path + '/public/css/style.css', dataLog('style-css'));
+          write(path + '/public/css/style.css');
       }
     });
     mkdir(path + '/public/templates');
-    write(path + '/public/templates/index.ejs', dataLog('temp-index'));
-    write(path + '/public/templates/layout.ejs', dataLog('temp-layout'));
+    write(path + '/public/templates/index.ejs');
+    write(path + '/public/templates/layout.ejs');
     mkdir(path + '/public/templates/auth');
-    write(path + '/public/templates/auth/signup.ejs', dataLog('auth-signup'));
-    write(path + '/public/templates/auth/login.ejs', dataLog('auth-login'));
+    write(path + '/public/templates/auth/signup.ejs');
+    write(path + '/public/templates/auth/login.ejs');
     mkdir(path + '/public/templates/users');
-    write(path + '/public/templates/users/index.ejs', dataLog('users-index'));
-    write(path + '/public/templates/users/view.ejs', dataLog('users-view'));
-    write(path + '/public/templates/users/edit.ejs', dataLog('users-edit'));
+    write(path + '/public/templates/users/index.ejs');
+    write(path + '/public/templates/users/view.ejs');
+    write(path + '/public/templates/users/edit.ejs');
     mkdir(path + '/public/templates/errors');
-    write(path + '/public/templates/errors/401.ejs', dataLog('errors-401'));
-    write(path + '/public/templates/errors/404.ejs', dataLog('errors-404'));
-    write(path + '/public/templates/errors/500.ejs', dataLog('errors-500'));
-    write(path + '/public/templates/errors/503.ejs', dataLog('errors-500'));
+    write(path + '/public/templates/errors/401.ejs');
+    write(path + '/public/templates/errors/404.ejs');
+    write(path + '/public/templates/errors/500.ejs');
+    write(path + '/public/templates/errors/503.ejs');
     mkdir(path + '/config');
-    write(path + '/config/passport.js', dataLog('config-passport'));
-    write(path + '/config/auth.js.example', dataLog('config-auth'));
+    write(path + '/config/passport.js');
+    write(path + '/config/auth.js.example');
   });
 }
 
@@ -105,20 +134,24 @@ function mkdir(path, callback) {
   mkdirp(path, callback)
 }
 
-function dataLog(path, callback) {
+function dataLog(path, options, callback) {
   var lib = require('../lib/data');
 
   _.each(lib.content, function(content){
     if(content.path === path){
-      callback(content.data);
+      if(options){
+        callback(content[options].data);
+      } else {
+        callback(content.data);
+      }
     }
   });
 }
 
-function write(path) {
-  var cleanPath = path.split('./')[1]
+function write(path, options) {
+  var cleanPath = path.split('./')[1];
 
-  dataLog(cleanPath, function(data){
+  dataLog(cleanPath, options, function(data){
     fs.writeFile(path, data);
   });
 }
