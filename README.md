@@ -39,45 +39,11 @@ While many command options are listed here, very few are actually implemented to
 ```
 ## File Structure
 
-server
-  models
-    index.js
-    User.js
-  routes
-    index.js
-    auth.js
-    users.js
-public
-  js
-    main.js
-  css
-    style.scss
-    // style.css
-  img
-    logo.png // muse logo
-    favicon.ico.
-  templates
-    index.ejs // home
-    layout.ejs // layout file
-    auth
-      signup.ejs // create account
-      login.ejs // login to account
-    users
-      index.ejs // view all users
-      view.ejs // view specific account
-      edit.ejs // edit user account
-    errors
-      401.ejs
-      404.ejs
-      500.ejs
-      503.ejs
-config
-  passport.js // passport config
-  auth.js.example // example auth API credentials
+![alt tag](./tree.png)
 
 ## Development Task List
 
-* Finalize default configuration and structure (grab image of tree structure)
+* Finalize default configuration and structure
     * Basic mongoose models and CRUD operations for Users, Pages, Blogs, and Posts
     * Separate view routes from API routes in preparation for client-side framework support
 * User Authentication (Passport)
@@ -127,15 +93,14 @@ npm test
 
 - [commander](https://github.com/tj/commander.js): The complete solution for node.js command-line programs
 - [mkdirp](https://github.com/substack/node-mkdirp): Recursively mkdir, like `mkdir -p`
+- [rimraf](https://github.com/isaacs/rimraf): A deep deletion module for node (like `rm -rf`)
 - [underscore](https://github.com/jashkenas/underscore): JavaScript's functional programming helper library.
 
 ## Dev Dependencies
 
-    "assert": "^1.3.0",
-    "chai": "^1.10.0",
-    "mocha": "^2.1.0",
-    "rimraf": "^2.2.8",
-    "sinon": "^1.12.2"
+- [chai](https://github.com/chaijs/chai): BDD/TDD assertion library for node.js and the browser. Test framework agnostic.
+- [mocha](https://github.com/mochajs/mocha): A simple, flexible, fun test framework
+- [sinon](https://github.com/cjohansen/Sinon.JS): JavaScript test spies, stubs and mocks.
 
 ## License
 
