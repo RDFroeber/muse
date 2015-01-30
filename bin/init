@@ -7,7 +7,9 @@
 var program = require('commander'),
     fs = require('fs'),
     mkdirp = require('mkdirp'),
-    rimraf = require('rimraf');
+    rimraf = require('rimraf'),
+    _ = require('underscore'),
+    async = require('async');
 
 /**
  * Command Line Interface
@@ -52,56 +54,71 @@ function generateMuse(path){
   mkdir(path, function(){
     mkdir(path + '/server');
     mkdir(path + '/server/models');
-    write(path + '/server/models/index.js', log());
-    write(path + '/server/models/User.js', log());
-    write(path + '/server/models/Page.js', log());
+    write(path + '/server/models/index.js');
+    write(path + '/server/models/User.js');
+    write(path + '/server/models/Page.js');
     mkdir(path + '/server/routes');
-    write(path + '/server/routes/index.js', log());
-    write(path + '/server/routes/users.js', log());
-    write(path + '/server/routes/auth.js', log());
+    write(path + '/server/routes/index.js');
+    write(path + '/server/routes/users.js');
+    write(path + '/server/routes/auth.js');
     mkdir(path + '/public');
     mkdir(path + '/public/js');
-    write(path + '/public/js/main.js', log());
+    write(path + '/public/js/main.js', dataLog('js-main'));
     mkdir(path + '/public/img');
+    // copy default logo
+    // copy default favicon
     mkdir(path + '/public/css', function(){
       switch (program.framework) {
         case 'sass':
-          write(path + '/public/css/style.scss', log());
+          write(path + '/public/css/style.scss', dataLog('style-sass'));
           break;
         case 'less':
-          write(path + '/public/css/style.less', log());
+          write(path + '/public/css/style.less', dataLog('style-less'));
           break;
         default:
-          write(path + '/public/css/style.css', log());
+          write(path + '/public/css/style.css', dataLog('style-css'));
       }
     });
     mkdir(path + '/public/templates');
+    write(path + '/public/templates/index.ejs', dataLog('temp-index'));
+    write(path + '/public/templates/layout.ejs', dataLog('temp-layout'));
+    mkdir(path + '/public/templates/auth');
+    write(path + '/public/templates/auth/signup.ejs', dataLog('auth-signup'));
+    write(path + '/public/templates/auth/login.ejs', dataLog('auth-login'));
+    mkdir(path + '/public/templates/users');
+    write(path + '/public/templates/users/index.ejs', dataLog('users-index'));
+    write(path + '/public/templates/users/view.ejs', dataLog('users-view'));
+    write(path + '/public/templates/users/edit.ejs', dataLog('users-edit'));
+    mkdir(path + '/public/templates/errors');
+    write(path + '/public/templates/errors/401.ejs', dataLog('errors-401'));
+    write(path + '/public/templates/errors/404.ejs', dataLog('errors-404'));
+    write(path + '/public/templates/errors/500.ejs', dataLog('errors-500'));
+    write(path + '/public/templates/errors/503.ejs', dataLog('errors-500'));
     mkdir(path + '/config');
+    write(path + '/config/passport.js', dataLog('config-passport'));
+    write(path + '/config/auth.js.example', dataLog('config-auth'));
   });
 }
 
-function mkdir(path, cb) {
-  console.log('   Creating: ' + path);
-  mkdirp(path, cb)
+function mkdir(path, callback) {
+  console.log('  create : ' + path.split('./')[1]);
+  mkdirp(path, callback)
 }
 
-function write(path, cb) {
-  console.log('   Creating: ' + path);
-  fs.writeFile(path, cb)
+function dataLog(path, callback) {
+  var lib = require('../lib/data');
+
+  _.each(lib.content, function(content){
+    if(content.path === path){
+      callback(content.data);
+    }
+  });
 }
 
-function log() {
-  console.log('Done!');
-}
+function write(path) {
+  var cleanPath = path.split('./')[1]
 
-function cleanup(dir, callback) {
-  if (typeof dir === 'function') {
-    callback = dir;
-    dir = tempDir;
-  }
-
-  rimraf(tempDir, function (err) {
-    console.log('Removing ' + tempDir);
-    callback(err);
+  dataLog(cleanPath, function(data){
+    fs.writeFile(path, data);
   });
 }

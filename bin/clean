@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+function cleanup(dir, callback) {
+  if(typeof dir === 'function') {
+    callback = dir;
+    dir = tempDir;
+  }
+
+  rimraf(tempDir, function (err) {
+    console.log('Removing ' + tempDir);
+    callback(err);
+  });
+}

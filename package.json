@@ -19,8 +19,10 @@
   ],
   "author": "Raleigh D. Froeber <RDFroeber@gmail.com> (http://raleighdaniel.com/)",
   "dependencies": {
+    "async": "^0.9.0",
     "commander": "^2.5.1",
-    "mkdirp": "^0.5.0"
+    "mkdirp": "^0.5.0",
+    "underscore": "^1.7.0"
   },
   "license": "MIT",
   "devDependencies": {

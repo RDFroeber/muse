@@ -48,14 +48,14 @@ server
     auth.js
     users.js
 public
+  js
+    main.js
   css
     style.scss
     // style.css
-  js
-    main.js
   img
     logo.png // muse logo
-    favicon.ico
+    favicon.ico.
   templates
     index.ejs // home
     layout.ejs // layout file
@@ -73,7 +73,7 @@ public
       503.ejs
 config
   passport.js // passport config
-  auth.js // auth API credentials
+  auth.js.example // example auth API credentials
 
 ## Development Task List
 
@@ -120,7 +120,6 @@ config
 Not implemented.
 
 ```sh
-npm install
 npm test
 ```
 
@@ -128,10 +127,15 @@ npm test
 
 - [commander](https://github.com/tj/commander.js): The complete solution for node.js command-line programs
 - [mkdirp](https://github.com/substack/node-mkdirp): Recursively mkdir, like `mkdir -p`
+- [underscore](https://github.com/jashkenas/underscore): JavaScript's functional programming helper library.
 
 ## Dev Dependencies
 
-None as of now.
+    "assert": "^1.3.0",
+    "chai": "^1.10.0",
+    "mocha": "^2.1.0",
+    "rimraf": "^2.2.8",
+    "sinon": "^1.12.2"
 
 ## License
 
