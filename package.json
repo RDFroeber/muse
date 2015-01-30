@@ -7,7 +7,7 @@
     "muse": "bin/init"
   },
   "scripts": {
-    "test": "mocha test/init"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
