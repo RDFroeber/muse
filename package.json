@@ -1,10 +1,11 @@
 {
   "name": "muse",
-  "version": "0.1.1-3",
+  "version": "0.1.1-4",
   "description": "A CMS Scaffolding Tool (Coming Soon)",
   "main": "index.js",
   "bin": {
-    "muse": "bin/init"
+    "muse": "bin/init",
+    "clean": "bin/clean"
   },
   "scripts": {
     "test": "mocha"

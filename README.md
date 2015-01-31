@@ -21,21 +21,37 @@ Source code can be found [here](https://github.com/RDFroeber/muse).
 
 ## Usage
 
-While many command options are listed here, very few are actually implemented to date. I will update this document as more become available.
+While many command options are listed here, very few are actually implemented to date. I will update this list as more become available.
+
+**Currently implemented:**
+| Command           | Shorthand | Longhand           | Options              | Default | Implemented? |
+|-------------------|-----------|--------------------|----------------------|---------|--------------|
+| Help              | -h        | --help             |                      |         | no           |
+| Version           | -V        | --version          |                      |         | yes          |
+| Style Engine      | -c        | --css <engine>     | css | sass | less    | css     | no           |
+| View Engine       | -e        | --view <engine>    | dust | ejs | hbs     | dust    | no           |
+| Portal            | -p        | --portal           |                      | none    | no           |
+| Client Auth       | -a        | --auth <type>      | basic | oauth | both | none    | no           |
+| No Blog           | -n        | --noblog           |                      | blog    | no           |
+| Client Framework  | -f        | --framework <name> | angular | ember      | none    | no           |
+| Backend Framework | -b        | --backend <name>   |                      | express | no           |
+| Database          | -d        | --database <name>  | mongo | postgres     | mongo   | no           |
 
 ```sh
-  Usage: muse init [options]
+  Usage: muse [options]
 
   Options:
 
     -h, --help              output usage information
     -V, --version           output the version number
-    -a, --auth              choose authentication strategy (basic|oauth|both) defaults to basic
-    -p, --private           make your site private by requiring users to log in
+    -c, --css <engine>      add stylesheet engine support (css|sass|less) defaults to css
+    -e, --view <engine>     add view engine support (dust|ejs|hbs) defaults to dust
+    -p, --portal            add client portal to site where users can log in
+    -a, --auth <type>       choose authentication strategy (basic|oauth|both) defaults to basic
     -n, --noblog            remove blog functionality from site
-    -c, --css <engine>      add stylesheet engine support (sass|less) defaults to sass
-    -e, --view <engine>     add view engine support (ejs|handlebars) defaults to ejs
     -f, --framework <name>  add client-side framework support (angular|ember) defaults to none
+    -b, --backend <name>    configure server-side framework (koa|hapi|sails) defaults to express
+    -d, --database <name>   configure database support (mongo|postgres) defaults to mongo
 ```
 ## File Structure
 
@@ -43,47 +59,78 @@ While many command options are listed here, very few are actually implemented to
 
 ## Development Task List
 
+Version 2.0:
+
 * Finalize default configuration and structure
-    * Basic mongoose models and CRUD operations for Users, Pages, Blogs, and Posts
+    * Basic mongoose models and CRUD operations for Users and Pages
     * Separate view routes from API routes in preparation for client-side framework support
-* User Authentication (Passport)
-    * Basic user auth
-    * OAuth support for Google+, Twitter, and Facebook
-    * Both
-* Blog functionality
-    * Single blog with multiple posts (without comments)
-    * Single blog with multiple posts (with comments)
 * Admin functionality without permissions
+    * Admin Dashboard
+    * Site Management
+    * Content Management
+    * User Management
+* Navigation
+    * Single top level page routing
+    * Additional secondary level routing
+* Blog functionality
+    * Basic mongoose models and CRUD operations for Blogs, and Posts
+    * Single blog with multiple posts (without comments or tags)
+* Multiple engine support
+    * Style: css
+    * Style: sass
+    * Style: less
+    * View: dust
+    * View: ejs
+    * View: handlebars
+
+Version 2.5:
+
 * Admin functionality with roles and multi-part permissions
+    * Basic mongoose models and CRUD operations for Roles and Permissions
     * Content creation and editing
     * Content publication
     * Content deletion
     * User viewing
     * User creation and editing
-* Navigation
-    * Single top level page routing
-    * Additional secondary level routing
+* Portal Option
+    * Clients can login to site
+* Client User Authentication (Passport)
+    * Basic user auth
+    * OAuth support for Google+, Twitter, and Facebook
+    * Both
+* Email system support (Mailgun)
+    * Account creation
+    * Password change
+* Blog functionality
+    * Basic mongoose models and CRUD operations for Comments and Tags
+    * Single blog with multiple posts (with comments and tags)
 
 
 ### Backlog
 
+Version 3.0:
+
 * Add tutorial option for base website generation
 * Email system support (Mailgun)
-    * Account creation
+    * Site Updates
     * Newsletters
-* Add multiple client-side framework support 
+* Add client-side framework support 
     * Angular
+* Multi-blog support
+
+Version 4.0:
+
+* Add multiple client-side framework support 
     * Ember
-    * Backbone
 * Add multiple Node.js framework support 
     * Koa
-    * Sails
     * Hapi
+    * Sails
 * Multi-blog support
 
 ## Tests
 
-Not implemented.
+Sufficient testing has not been implemented to date.
 
 ```sh
 npm test
