@@ -24,9 +24,10 @@ Source code can be found [here](https://github.com/RDFroeber/muse).
 While many command options are listed here, very few are actually implemented to date. I will update this list as more become available.
 
 **Currently implemented:**
+
 | Command           | Shorthand | Longhand           | Options              | Default | Implemented? |
 |-------------------|-----------|--------------------|----------------------|---------|--------------|
-| Help              | -h        | --help             |                      |         | no           |
+| Help              | -h        | --help             |                      |         | yes          |
 | Version           | -V        | --version          |                      |         | yes          |
 | Style Engine      | -c        | --css <engine>     | css | sass | less    | css     | no           |
 | View Engine       | -e        | --view <engine>    | dust | ejs | hbs     | dust    | no           |
@@ -37,6 +38,7 @@ While many command options are listed here, very few are actually implemented to
 | Backend Framework | -b        | --backend <name>   |                      | express | no           |
 | Database          | -d        | --database <name>  | mongo | postgres     | mongo   | no           |
 
+
 ```sh
   Usage: muse [options]
 
@@ -46,7 +48,7 @@ While many command options are listed here, very few are actually implemented to
     -V, --version           output the version number
     -c, --css <engine>      add stylesheet engine support (css|sass|less) defaults to css
     -e, --view <engine>     add view engine support (dust|ejs|hbs) defaults to dust
-    -p, --portal            add client portal to site where users can log in
+    -p, --portal            add client portal to site where users can login
     -a, --auth <type>       choose authentication strategy (basic|oauth|both) defaults to basic
     -n, --noblog            remove blog functionality from site
     -f, --framework <name>  add client-side framework support (angular|ember) defaults to none
